@@ -8,10 +8,114 @@ var axios = require("axios");
 // capture the command the user puts in
 
 var userCommand = process.argv[2];
-var userRequest = // everything index[3] and later
+var userRequest = process.argv[3]; // everything index[3] and later
+// console.log(userCommand);
+
+// store all arguments in array
+    // var nodeArgs = process.argv;
+    // var movieName = "";
+
+    // // loop through all node args and create movie name strings
+    // for (var i = 2; i < nodeArgs.length; i++) {
+    //     if (i > 2 && i < nodeArgs.length) {
+    //         movieName += "+" + nodeArgs[i];
+    //     }
+    // }
 
 
-console.log(userCommand);
+
+// SWITCH STATEMENT
+
+switch (userCommand) {
+    case "movie-this":
+        movie();
+        break;
+
+    case "spotify-this-song":
+        song();
+        break;
+
+    case "concert-this":
+        concert();
+        break;
+
+    case "do-what-it-says":
+        doWhat();
+        break;
+}
+
+
+// USER COMMAND FUNCTIONS
+
+function movie() {
+    // store all arguments in array
+    var nodeArgs = process.argv;
+    var movieName = "";
+
+    // loop through all node args and create movie name strings
+    for (var i = 2; i < nodeArgs.length; i++) {
+        if (i > 2 && i < nodeArgs.length) {
+            movieName += "+" + nodeArgs[i];
+        }
+    }
+
+    // axios call
+    var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+
+    console.log(queryUrl);
+
+    axios.get(queryUrl).then(
+        function (response) {
+            //   console.log("Release Year: " + response.data.Year);
+        })
+}
+
+
+
+function song() {
+
+}
+
+function concert() {
+
+}
+
+function movie() {
+    // store all arguments in array
+    var nodeArgs = process.argv;
+    var movieName = "";
+
+    // loop through all node args and create movie name strings
+    for (var i = 2; i < nodeArgs.length; i++) {
+        if (i > 2 && i < nodeArgs.length) {
+            movieName += "+" + nodeArgs[i];
+        }
+    }
+
+    // axios call
+    var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+
+    console.log(queryUrl);
+
+    axios.get(queryUrl).then(
+        function (response) {
+            //   console.log("Release Year: " + response.data.Year);
+        })
+}
+
+
+
+
+function doWhat() {
+
+    fs.readFile("random.txt", "utf8", function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+
+
+    }
+
 
 
 // SWITCH STATEMENT
