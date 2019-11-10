@@ -79,20 +79,25 @@ function song() {
         }
     }
 
-
     spotify
-    .search({ type: 'track', query: 'All the Small Things' })
-    .then(function(response) {
-      console.log(response);
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
+        .search({ type: 'track', query: songName })
+        .then(function (response) {
+            // console.log(response.tracks.items[0]);
 
+            console.log("HERE ARE 5 SONGS WITH THAT NAME:")
 
-
+            for (var i = 0; i < 5; i++) {
+                console.log("============================")
+                console.log("Artist: " + response.tracks.items[i].artists[0].name);
+                console.log("Song name: " + response.tracks.items[i].name);
+                console.log("Album: " + response.tracks.items[i].album.name);
+                console.log("Song preview: " + response.tracks.items[i].preview_url);
+            }
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
 }
-
 
 function concert() {
     var nodeArgs = process.argv;
@@ -137,16 +142,14 @@ function concert() {
 }
 
 
+function doWhat() {
 
-        // function doWhat() {
-
-        //     fs.readFile("random.txt", "utf8", function (err, data) {
-        //         if (err) {
-        //             return console.log(err);
-        //         }
-
-
-        //     }
+    fs.readFile("random.txt", "utf8", function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+    })
+}
 
 
 
