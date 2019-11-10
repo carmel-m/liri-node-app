@@ -8,19 +8,20 @@ var axios = require("axios");
 // capture the command the user puts in
 
 var userCommand = process.argv[2];
-var userRequest = process.argv[3]; // everything index[3] and later
+
+// var userRequest = process.argv[3]; (everything index[3] and later)
 // console.log(userCommand);
 
 // store all arguments in array
-    // var nodeArgs = process.argv;
-    // var movieName = "";
+// var nodeArgs = process.argv;
+// var movieName = "";
 
-    // // loop through all node args and create movie name strings
-    // for (var i = 2; i < nodeArgs.length; i++) {
-    //     if (i > 2 && i < nodeArgs.length) {
-    //         movieName += "+" + nodeArgs[i];
-    //     }
-    // }
+// // loop through all node args and create movie name strings
+// for (var i = 2; i < nodeArgs.length; i++) {
+//     if (i > 2 && i < nodeArgs.length) {
+//         movieName += "+" + nodeArgs[i];
+//     }
+// }
 
 
 
@@ -53,56 +54,74 @@ function movie() {
     var movieName = "";
 
     // loop through all node args and create movie name strings
-    for (var i = 2; i < nodeArgs.length; i++) {
-        if (i > 2 && i < nodeArgs.length) {
-            movieName += "+" + nodeArgs[i];
+    for (var i = 3; i < nodeArgs.length; i++) {
+        if (i > 3 && i < nodeArgs.length) {
+            movieName = movieName + "+" + nodeArgs[i];
+        } else {
+            movieName += nodeArgs[i];
         }
     }
 
     // axios call
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
 
-    console.log(queryUrl);
+    // console.log(queryUrl);
 
     axios.get(queryUrl).then(
         function (response) {
-            //   console.log("Release Year: " + response.data.Year);
+            console.log("Title: " + response.data.Title);
+            console.log("Release year: " + response.data.Year);
+            console.log("IMDb Rating: " + response.data.Ratings[0].Value);
+            console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
+            console.log("Country of origin: " + response.data.Country);
+            console.log("Plot: " + response.data.Plot);
+            console.log("Actors: " + response.data.Actors);
         })
 }
-
 
 
 function song() {
-
-}
-
-function concert() {
-
-}
-
-function movie() {
     // store all arguments in array
     var nodeArgs = process.argv;
-    var movieName = "";
+    var songName = "";
 
-    // loop through all node args and create movie name strings
-    for (var i = 2; i < nodeArgs.length; i++) {
-        if (i > 2 && i < nodeArgs.length) {
-            movieName += "+" + nodeArgs[i];
+    // loop through node args and create movie name strings
+    for (var i = 3; i < nodeArgs.length; i++) {
+        if (i > 3 && i < nodeArgs.length) {
+            songName = songName + "+" + nodeArgs[i];
+        } else {
+            songName += nodeArgs[i];
         }
     }
 
-    // axios call
-    var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+      // axios call
+      var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
 
-    console.log(queryUrl);
+      console.log(queryUrl);
+  
+      axios.get(queryUrl).then(
+          function (response) {
+              
+        //convert event date to MM/DD/YYYY
 
-    axios.get(queryUrl).then(
-        function (response) {
-            //   console.log("Release Year: " + response.data.Year);
-        })
-}
+              console.log("Venue name: " + response.data.Title);
+              console.log("Venue location: " + response.data.Year);
+              console.log("Event date: " + response.data.Ratings[0].Value);
+          })
 
+
+function concert() {
+    var nodeArgs = process.argv;
+    var artistName = "";
+
+    // loop through all node args and create movie name strings
+    for (var i = 3; i < nodeArgs.length; i++) {
+        if (i > 3 && i < nodeArgs.length) {
+            artistName = artistName + "+" + nodeArgs[i];
+        } else {
+            artistName += nodeArgs[i];
+        }
+    }
 
 
 
