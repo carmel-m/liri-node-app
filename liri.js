@@ -3,26 +3,11 @@ var keys = require("./keys.js");
 var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
 var axios = require("axios");
+var moment = require('moment');
 
 
 // capture the command the user puts in
-
 var userCommand = process.argv[2];
-
-// var userRequest = process.argv[3]; (everything index[3] and later)
-// console.log(userCommand);
-
-// store all arguments in array
-// var nodeArgs = process.argv;
-// var movieName = "";
-
-// // loop through all node args and create movie name strings
-// for (var i = 2; i < nodeArgs.length; i++) {
-//     if (i > 2 && i < nodeArgs.length) {
-//         movieName += "+" + nodeArgs[i];
-//     }
-// }
-
 
 
 // SWITCH STATEMENT
@@ -94,20 +79,19 @@ function song() {
         }
     }
 
-      // axios call
-      var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
 
-      console.log(queryUrl);
-  
-      axios.get(queryUrl).then(
-          function (response) {
-              
-        //convert event date to MM/DD/YYYY
+    spotify
+    .search({ type: 'track', query: 'All the Small Things' })
+    .then(function(response) {
+      console.log(response);
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
 
-              console.log("Venue name: " + response.data.Title);
-              console.log("Venue location: " + response.data.Year);
-              console.log("Event date: " + response.data.Ratings[0].Value);
-          })
+
+
+}
 
 
 function concert() {
@@ -123,17 +107,46 @@ function concert() {
         }
     }
 
+    // axios call
+    var queryUrl = "http://rest.bandsintown.com/artists/" + artistName + "/events?app_id=codingbootcamp";
+
+    // console.log(queryUrl);
+
+    axios.get(queryUrl).then(
+        function (response) {
+            // console.log(response);
+
+            console.log("HERE ARE THE NEXT 5 SHOWS:")
+
+            for (var i = 0; i < 5; i++) {
+
+                // get event date then convert to MM/DD/YYYY
+
+                var date = response.data[i].datetime;
+                // console.log(date);
+
+                dateFormat = moment(date).format('DD/MM/YYYY');
+                // console.log(dateFormat);
+                console.log("============================")
+                console.log("Venue name: " + response.data[i].venue.name);
+                console.log("Venue location: " + response.data[i].venue.city + ", " + response.data[0].venue.country);
+                console.log("Event date: " + dateFormat);
+            }
+
+        })
+}
 
 
-function doWhat() {
 
-    fs.readFile("random.txt", "utf8", function (err, data) {
-        if (err) {
-            return console.log(err);
-        }
+        // function doWhat() {
+
+        //     fs.readFile("random.txt", "utf8", function (err, data) {
+        //         if (err) {
+        //             return console.log(err);
+        //         }
 
 
-    }
+        //     }
 
 
 
