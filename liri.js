@@ -10,24 +10,29 @@ var fs = require("fs");
 // capture the command the user puts in
 var userCommand = process.argv[2];
 
+// console.log(userCommand);
+
+var userInput = process.argv.slice(3).join("+");
+
+// console.log(userInput);
 
 // SWITCH STATEMENT
 
 switch (userCommand) {
     case "movie-this":
-        movie();
+        movie(userInput);
         break;
 
     case "spotify-this-song":
-        song();
+        song(userInput);
         break;
 
     case "concert-this":
-        concert();
+        concert(userInput);
         break;
 
     case "do-what-it-says":
-        doWhat();
+        doWhat(userInput);
         break;
 
     default:
@@ -37,18 +42,10 @@ switch (userCommand) {
 
 // USER COMMAND FUNCTIONS
 
-function movie() {
-    // store all arguments in array
-    var nodeArgs = process.argv;
-    var movieName = "";
+function movie(movieName) {
 
-    // loop through all node args and create movie name strings
-    for (var i = 3; i < nodeArgs.length; i++) {
-        if (i > 3 && i < nodeArgs.length) {
-            movieName = movieName + "+" + nodeArgs[i];
-        } else {
-            movieName += nodeArgs[i];
-        }
+    if (!movieName) {
+        movieName = "Mr. Nobody";
     }
 
     // axios call
@@ -68,18 +65,12 @@ function movie() {
         })
 }
 
-function song() {
-    // store all arguments in array
-    var nodeArgs = process.argv;
-    var songName = "";
 
-    // loop through node args and create movie name strings
-    for (var i = 3; i < nodeArgs.length; i++) {
-        if (i > 3 && i < nodeArgs.length) {
-            songName = songName + "+" + nodeArgs[i];
-        } else {
-            songName += nodeArgs[i];
-        }
+
+function song(songName) {
+
+    if (!songName) {
+        songName = "The Sign";
     }
 
     spotify
@@ -103,17 +94,10 @@ function song() {
         });
 }
 
-function concert() {
-    var nodeArgs = process.argv;
-    var artistName = "";
+function concert(artistName) {
 
-    // loop through all node args and create movie name strings
-    for (var i = 3; i < nodeArgs.length; i++) {
-        if (i > 3 && i < nodeArgs.length) {
-            artistName = artistName + "+" + nodeArgs[i];
-        } else {
-            artistName += nodeArgs[i];
-        }
+    if (!artistName) {
+        artistName = "Lizzo";
     }
 
     // axios call
@@ -152,57 +136,28 @@ function doWhat() {
         if (err) {
             return console.log(err);
         }
-        // console.log(data);
 
         var arg = data.split(",");
+        // console.log(arg);
 
         var command = arg[0];
         var input = arg[1];
 
-        console.log(command);
-        console.log(input);
-
-        // add plus signs between words in 'input'
-        // then pass into appropriate function:
+        // console.log(command);
+        // console.log(input);
 
         switch (command) {
             case "movie-this":
-                input = movieName;
-                movie();
+                movie(input);
                 break;
 
             case "spotify-this-song":
-                song();
+                song(input);
                 break;
 
             case "concert-this":
-                concert();
+                concert(input);
                 break;
         }
     })
 }
-
-
-
-    // check if userCommand is "concert-this"
-        // run API call using axios to bands-in-town API
-        // inject user's search term in the queryURL
-
-        // display name of venue, venue location, date of event
-        // format date using moment.js to be MM/DD/YYYY
-
-
-    // check if userCommand is "spotify-this-song"
-        // using spotify Node package info, make a call to the spotify API
-        // display to user - artist(s), song's name, preview link of song from spotify, album song is from, provide default search term if user doesn't provide an argument
-
-
-    // check if userCommand is "movie-this"  (use omdb activities 17 and 18)
-        // 
-
-
-    // check if userCommand is "do-what-it-says"
-        // uses fs to read 'random.txt' file 
-
-
-    // otherwise, display message to user to try again
