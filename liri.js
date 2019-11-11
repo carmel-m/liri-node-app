@@ -4,6 +4,7 @@ var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
 var axios = require("axios");
 var moment = require('moment');
+var fs = require("fs");
 
 
 // capture the command the user puts in
@@ -28,6 +29,9 @@ switch (userCommand) {
     case "do-what-it-says":
         doWhat();
         break;
+
+    default:
+        console.log("I don't understand that command.  Please try again.");
 }
 
 
@@ -64,7 +68,6 @@ function movie() {
         })
 }
 
-
 function song() {
     // store all arguments in array
     var nodeArgs = process.argv;
@@ -93,6 +96,7 @@ function song() {
                 console.log("Album: " + response.tracks.items[i].album.name);
                 console.log("Song preview: " + response.tracks.items[i].preview_url);
             }
+            console.log("============================")
         })
         .catch(function (err) {
             console.log(err);
@@ -134,10 +138,10 @@ function concert() {
                 // console.log(dateFormat);
                 console.log("============================")
                 console.log("Venue name: " + response.data[i].venue.name);
-                console.log("Venue location: " + response.data[i].venue.city + ", " + response.data[0].venue.country);
+                console.log("Venue location: " + response.data[i].venue.city + ", " + response.data[i].venue.country);
                 console.log("Event date: " + dateFormat);
             }
-
+            console.log("============================");
         })
 }
 
@@ -148,12 +152,37 @@ function doWhat() {
         if (err) {
             return console.log(err);
         }
+        // console.log(data);
+
+        var arg = data.split(",");
+
+        var command = arg[0];
+        var input = arg[1];
+
+        console.log(command);
+        console.log(input);
+
+        // add plus signs between words in 'input'
+        // then pass into appropriate function:
+
+        switch (command) {
+            case "movie-this":
+                input = movieName;
+                movie();
+                break;
+
+            case "spotify-this-song":
+                song();
+                break;
+
+            case "concert-this":
+                concert();
+                break;
+        }
     })
 }
 
 
-
-// SWITCH STATEMENT
 
     // check if userCommand is "concert-this"
         // run API call using axios to bands-in-town API
