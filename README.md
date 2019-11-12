@@ -4,6 +4,9 @@
 #### APP DESCRIPTION
 LIRI is a command line node app that takes in parameters and returns related data from one of three APIs - Spotify, Bands In Town or OMDB.
 
+The GitHub repository can be found [here](https://github.com/carmel-m/liri-node-app).
+
+
 ---
 
 #### INSTALLING/GETTING STARTED
@@ -48,6 +51,7 @@ SPOTIFY_SECRET=your-spotify-secret
 
 3. Examples of the terminal commands and expected output follow:
 
+---
 
 **`movie-this`**
 ``` shell
