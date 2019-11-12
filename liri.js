@@ -7,14 +7,9 @@ var moment = require('moment');
 var fs = require("fs");
 
 
-// capture the command the user puts in
 var userCommand = process.argv[2];
-
-// console.log(userCommand);
-
 var userInput = process.argv.slice(3).join("+");
 
-// console.log(userInput);
 
 // SWITCH STATEMENT
 
@@ -40,21 +35,22 @@ switch (userCommand) {
 }
 
 
-// USER COMMAND FUNCTIONS
+// ============ USER COMMAND FUNCTIONS ============
+
+// MOVIE-THIS FUNCTION
 
 function movie(movieName) {
 
     if (!movieName) {
-        movieName = "Mr. Nobody";
+        movieName = "Pet Semetary";
     }
 
-    // axios call
+    // Axios call to OMDB API
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
-
-    // console.log(queryUrl);
 
     axios.get(queryUrl).then(
         function (response) {
+            console.log("============================")
             console.log("Title: " + response.data.Title);
             console.log("Release year: " + response.data.Year);
             console.log("IMDb Rating: " + response.data.Ratings[0].Value);
@@ -62,25 +58,25 @@ function movie(movieName) {
             console.log("Country of origin: " + response.data.Country);
             console.log("Plot: " + response.data.Plot);
             console.log("Actors: " + response.data.Actors);
+            console.log("============================")
         })
 }
 
 
+// SPOTIFY-THIS-FUNCTION FUNCTION
 
 function song(songName) {
 
     if (!songName) {
-        songName = "The Sign";
+        songName = "Chamber of Reflection";
     }
 
     spotify
         .search({ type: 'track', query: songName })
         .then(function (response) {
-            // console.log(response.tracks.items[0]);
+            console.log("HERE ARE 3 SONGS WITH THAT NAME:")
 
-            console.log("HERE ARE 5 SONGS WITH THAT NAME:")
-
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 3; i++) {
                 console.log("============================")
                 console.log("Artist: " + response.tracks.items[i].artists[0].name);
                 console.log("Song name: " + response.tracks.items[i].name);
@@ -94,32 +90,29 @@ function song(songName) {
         });
 }
 
+
+// CONCERT-THIS FUNCTION
+
 function concert(artistName) {
 
     if (!artistName) {
         artistName = "Lizzo";
     }
 
-    // axios call
+    // Axios call to Bands In Town API
     var queryUrl = "http://rest.bandsintown.com/artists/" + artistName + "/events?app_id=codingbootcamp";
-
-    // console.log(queryUrl);
 
     axios.get(queryUrl).then(
         function (response) {
-            // console.log(response);
 
-            console.log("HERE ARE THE NEXT 5 SHOWS:")
+            console.log("HERE ARE THE NEXT 3 SHOWS:")
 
-            for (var i = 0; i < 5; i++) {
-
-                // get event date then convert to MM/DD/YYYY
+            for (var i = 0; i < 3; i++) {
 
                 var date = response.data[i].datetime;
-                // console.log(date);
 
                 dateFormat = moment(date).format('DD/MM/YYYY');
-                // console.log(dateFormat);
+
                 console.log("============================")
                 console.log("Venue name: " + response.data[i].venue.name);
                 console.log("Venue location: " + response.data[i].venue.city + ", " + response.data[i].venue.country);
@@ -129,7 +122,6 @@ function concert(artistName) {
         })
 }
 
-
 function doWhat() {
 
     fs.readFile("random.txt", "utf8", function (err, data) {
@@ -138,13 +130,9 @@ function doWhat() {
         }
 
         var arg = data.split(",");
-        // console.log(arg);
 
         var command = arg[0];
         var input = arg[1];
-
-        // console.log(command);
-        // console.log(input);
 
         switch (command) {
             case "movie-this":
